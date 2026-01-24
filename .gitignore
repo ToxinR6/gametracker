@@ -1,0 +1,21 @@
+# IntelliJ / IDE
+.idea/
+*.iml
+
+# Maven
+target/
+
+# Node / React
+node_modules/
+dist/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Env files
+.env
+.env.local
