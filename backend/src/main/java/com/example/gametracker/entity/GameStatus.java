@@ -1,8 +1,10 @@
 package com.example.gametracker.entity;
 
 public enum GameStatus {
-    BACKLOG,
+    NOT_STARTED,
     PLAYING,
+    ON_HOLD,
     COMPLETED,
-    DROPPED
+    DROPPED,
+    WANT_TO_PLAY
 }

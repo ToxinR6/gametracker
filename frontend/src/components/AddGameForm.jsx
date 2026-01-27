@@ -1,36 +1,48 @@
 import { useState } from "react";
-import { createGame } from "../api/gameApi";
+import { Box, TextField, Button } from "@mui/material";
 
-function AddGameForm({ onGameAdded }) {
+function AddGameForm({ setGames }) {
   const [title, setTitle] = useState("");
+  const [hoursPlayed, setHoursPlayed] = useState("");
 
-  const submit = async (e) => {
-
-    console.log("Submit Clicked");
-    e.preventDefault();
-
+  const handleAddGame = () => {
     const newGame = {
-      title,
+      id: Date.now(), // Use a temporary unique ID
+      title: title,
       status: "PLAYING",
-      hoursPlayed: 0,
-      notes: ""
+      hoursPlayed: Number(hoursPlayed),
     };
-
-    const res = await createGame(newGame);
-    onGameAdded(res.data);
+    setGames((prevGames) => [...prevGames, newGame]);
     setTitle("");
+    setHoursPlayed("");
   };
 
   return (
-    <form onSubmit={submit}>
-      <input
+    <Box
+      component="form"
+      sx={{
+        "& > :not(style)": { m: 1, width: "25ch" },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField
+        id="title"
+        label="Game Title"
         value={title}
-        onChange={e => setTitle(e.target.value)}
-        placeholder="Game title"
-        required
+        onChange={(e) => setTitle(e.target.value)}
       />
-      <button>Add</button>
-    </form>
+      <TextField
+        id="hoursPlayed"
+        label="Hours Played"
+        type="number"
+        value={hoursPlayed}
+        onChange={(e) => setHoursPlayed(e.target.value)}
+      />
+      <Button variant="contained" onClick={handleAddGame}>
+        Add Game
+      </Button>
+    </Box>
   );
 }
 

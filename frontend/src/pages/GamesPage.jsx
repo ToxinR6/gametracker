@@ -1,42 +1,47 @@
 import { useEffect, useState } from "react";
+import {
+  Container,
+  Typography,
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
 import { getAllGames } from "../api/gameApi";
 import AddGameForm from "../components/AddGameForm";
 
 function GamesPage() {
   const [games, setGames] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getAllGames()
-      .then(res => setGames(res.data))
-      .catch(err => console.error(err))
-      .finally(() => setLoading(false));
+      .then((res) => {
+        setGames(res.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching games:", err);
+      });
   }, []);
 
-  const addGameToList = (game) => {
-    setGames(prev => [...prev, game]);
-  };
-
-  if (loading) return <p>Loading games...</p>;
-
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>My Games</h1>
-
-      <AddGameForm onGameAdded={addGameToList} />
-
-      {games.length === 0 ? (
-        <p>No games yet</p>
-      ) : (
-        <ul>
-          {games.map(game => (
-            <li key={game.id}>
-              <strong>{game.title}</strong> — {game.status} — {game.hoursPlayed} hrs
-            </li>
+    <Container>
+      <Box sx={{ my: 4 }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          My Games
+        </Typography>
+        <AddGameForm setGames={setGames} />
+        <List>
+          {games.map((game) => (
+            <ListItem key={game.id}>
+              <ListItemText
+                primary={game.title}
+                secondary={`${game.status} (${game.hoursPlayed} hrs)`}
+              />
+            </ListItem>
           ))}
-        </ul>
-      )}
-    </div>
+        </List>
+      </Box>
+    </Container>
   );
 }
 

@@ -1,6 +1,9 @@
 package com.example.gametracker.dto;
 
 import com.example.gametracker.entity.GameStatus;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
@@ -15,7 +18,8 @@ public class GameRequestDTO {
     @NotBlank
     private String title;
 
-    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private GameStatus status;
 
     @NotNull
