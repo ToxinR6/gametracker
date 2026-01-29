@@ -21,7 +21,14 @@ public class Game {
     private Long steamAppId;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private GameSource source;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private GameStatus status;
+
+    private String imageUrl;
 
     private int hoursPlayed;
 
