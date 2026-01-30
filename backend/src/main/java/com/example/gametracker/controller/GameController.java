@@ -3,7 +3,6 @@ package com.example.gametracker.controller;
 
 import com.example.gametracker.dto.GameRequestDTO;
 import com.example.gametracker.dto.GameResponseDTO;
-import com.example.gametracker.entity.Game;
 import com.example.gametracker.service.GameService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +27,14 @@ public class GameController {
     ) {
         return gameService.createGame(dto);
     }
+    @PatchMapping("/{id}/status")
+    public GameResponseDTO updateGameStatus(
+            @PathVariable Long id,
+            @RequestParam String status
+    ) {
+        return gameService.updateStatus(id, status);
+    }
+
 
     // READ ALL
     @GetMapping

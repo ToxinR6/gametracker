@@ -4,29 +4,31 @@ import com.example.gametracker.dto.GameResponseDTO;
 import com.example.gametracker.service.GameService;
 import com.example.gametracker.steam.dto.SteamGameDTO;
 import com.example.gametracker.steam.service.SteamService;
+import com.example.gametracker.steam.service.SteamSyncService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/steam")
-@CrossOrigin(origins = "http:localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173")
+@RequiredArgsConstructor
 public class SteamController {
 
-
+    private final SteamSyncService steamSyncService;
     private final SteamService steamService;
     private final GameService gameService;
 
-    public SteamController(SteamService steamService,GameService gameService) {
-        this.gameService = gameService;
-        this.steamService = steamService;
+    @PostMapping("/sync")
+    public ResponseEntity<Void> syncSteamGames(@RequestParam String steamInput) {
+        steamSyncService.syncOwnedGames(steamInput);
+        return ResponseEntity.ok().build();
     }
 
-
     @GetMapping("/games/{steamId}")
-    public List<SteamGameDTO> getOwnedGames(
-            @PathVariable String steamId
-    ) {
+    public List<SteamGameDTO> getOwnedGames(@PathVariable String steamId) {
         return steamService.getOwnedGames(steamId);
     }
 
@@ -40,5 +42,4 @@ public class SteamController {
 
         return gameService.importFromSteam(steamGame);
     }
-
 }

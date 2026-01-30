@@ -38,6 +38,18 @@ public class GameService {
                 .toList();
     }
 
+    public GameResponseDTO updateStatus(Long id, String status) {
+
+        Game game = gameRepository.findById(id)
+                .orElseThrow(() -> new GameNotFoundException(id));
+
+        game.setStatus(GameStatus.valueOf(status));
+
+        Game saved = gameRepository.save(game);
+        return mapToResponse(saved);
+    }
+
+
     // READ BY ID
     public GameResponseDTO getGameById(Long id) {
         Game game = gameRepository.findById(id)
