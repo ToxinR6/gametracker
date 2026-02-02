@@ -31,7 +31,11 @@ public class SteamSyncService {
 
         Game game = gameRepository
                 .findBySteamAppId(steamGame.getAppId())
-                .orElseGet(Game::new);
+                .orElseGet(() ->
+                        gameRepository.findByTitleIgnoreCase(steamGame.getName())
+                                .orElse(new Game())
+                );
+
 
         game.setTitle(steamGame.getName());
         game.setSteamAppId(steamGame.getAppId());

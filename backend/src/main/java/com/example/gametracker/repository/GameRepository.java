@@ -11,4 +11,6 @@ public interface GameRepository extends JpaRepository<Game, Long> {
 
     Optional<Game> findBySteamAppId(Long steamAppId);
     boolean existsByTitleIgnoreCase(@NotBlank String title);
+
+    Optional<Game> findByTitleIgnoreCase(String name);
 }

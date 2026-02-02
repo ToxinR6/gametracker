@@ -6,11 +6,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GameResponseDTO {
-
     private Long id;
-    private String status;
     private String title;
-    private Integer hoursPlayed;
+    private String status;
+    private int hoursPlayed;
     private String notes;
-
+    private String imageUrl;
 }
+

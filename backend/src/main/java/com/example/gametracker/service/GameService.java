@@ -97,8 +97,10 @@ public class GameService {
         dto.setStatus(game.getStatus().name());
         dto.setHoursPlayed(game.getHoursPlayed());
         dto.setNotes(game.getNotes());
+        dto.setImageUrl(game.getImageUrl());
         return dto;
     }
+
 
     public GameResponseDTO importFromSteam(SteamGameDTO steamGame){
 
