@@ -3,6 +3,7 @@ package com.example.gametracker.steam.controller;
 import com.example.gametracker.dto.GameResponseDTO;
 import com.example.gametracker.service.GameService;
 import com.example.gametracker.steam.dto.SteamGameDTO;
+import com.example.gametracker.steam.dto.SteamSyncResponse;
 import com.example.gametracker.steam.service.SteamService;
 import com.example.gametracker.steam.service.SteamSyncService;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,9 @@ public class SteamController {
     private final GameService gameService;
 
     @PostMapping("/sync")
-    public ResponseEntity<Void> syncSteamGames(@RequestParam String steamInput) {
-        steamSyncService.syncOwnedGames(steamInput);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<SteamSyncResponse> syncSteamGames(@RequestParam String steamInput) {
+        SteamSyncResponse response = steamSyncService.syncOwnedGames(steamInput);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/games/{steamId}")

@@ -1,4 +1,100 @@
 body {
     margin: 0;
     min-height: 100vh;
+    background:
+      linear-gradient(180deg, rgba(15, 17, 22, 0.92), rgba(15, 17, 22, 0.98)),
+      url("./assets/background-game.jpg") center top / cover no-repeat,
+      #0f1116;
+    color: #e8edf2;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url("./assets/background-game.jpg") center top / cover no-repeat;
+    filter: blur(6px);
+    transform: scale(1.02);
+    z-index: -2;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 17, 22, 0.6);
+    z-index: -1;
+}
+
+.gt-card {
+    animation: gtCardEnter 420ms ease both;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+    overflow: hidden;
+}
+
+.gt-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+}
+
+.gt-card:hover .gt-poster {
+    transform: scale(1.03);
+}
+
+.gt-poster {
+    transition: transform 220ms ease;
+}
+
+.gt-actions {
+    opacity: 0.2;
+    transition: opacity 180ms ease;
+}
+
+.gt-card:hover .gt-actions {
+    opacity: 1;
+}
+
+.gt-empty {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    height: 180px;
+    border-radius: 16px;
+    border: 1px dashed rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.03);
+    animation: gtCardEnter 420ms ease both;
+}
+
+
+.gt-badge {
+    animation: gtBadgePop 380ms ease both 120ms;
+}
+
+@keyframes gtCardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes gtBadgePop {
+    0% {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.9);
+    }
+    60% {
+        opacity: 1;
+        transform: translateY(0) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }

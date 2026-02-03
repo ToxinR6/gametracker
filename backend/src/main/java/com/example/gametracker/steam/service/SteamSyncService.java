@@ -5,9 +5,11 @@ import com.example.gametracker.entity.GameSource;
 import com.example.gametracker.entity.GameStatus;
 import com.example.gametracker.repository.GameRepository;
 import com.example.gametracker.steam.dto.SteamGameDTO;
+import com.example.gametracker.steam.dto.SteamSyncResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,17 +19,45 @@ public class SteamSyncService {
     private final SteamService steamService;
     private final GameRepository gameRepository;
 
-    public void syncOwnedGames(String steamInput) {
+    public SteamSyncResponse syncOwnedGames(String steamInput) {
 
         String steamId = steamService.resolveSteamId(steamInput);
         List<SteamGameDTO> steamGames = steamService.getOwnedGames(steamId);
 
+        int createdCount = 0;
+        int updatedCount = 0;
+        int sampleLimit = 200;
+        List<Long> sampleAppIds = new ArrayList<>();
+        List<String> sampleTitles = new ArrayList<>();
+
         for (SteamGameDTO steamGame : steamGames) {
-            upsertGame(steamGame);
+            boolean created = upsertGame(steamGame);
+            if (created) {
+                createdCount++;
+            } else {
+                updatedCount++;
+            }
+
+            if (sampleAppIds.size() < sampleLimit) {
+                sampleAppIds.add(steamGame.getAppId());
+            }
+            if (sampleTitles.size() < sampleLimit) {
+                sampleTitles.add(steamGame.getName());
+            }
         }
+
+        return SteamSyncResponse.builder()
+                .steamInput(steamInput)
+                .steamId(steamId)
+                .totalGames(steamGames.size())
+                .createdCount(createdCount)
+                .updatedCount(updatedCount)
+                .sampleAppIds(sampleAppIds)
+                .sampleTitles(sampleTitles)
+                .build();
     }
 
-    private void upsertGame(SteamGameDTO steamGame) {
+    private boolean upsertGame(SteamGameDTO steamGame) {
 
         Game game = gameRepository
                 .findBySteamAppId(steamGame.getAppId())
@@ -36,6 +66,7 @@ public class SteamSyncService {
                                 .orElse(new Game())
                 );
 
+        boolean isNew = game.getId() == null;
 
         game.setTitle(steamGame.getName());
         game.setSteamAppId(steamGame.getAppId());
@@ -61,5 +92,6 @@ public class SteamSyncService {
         );
 
         gameRepository.save(game);
+        return isNew;
     }
 }

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="260" viewBox="0 0 1400 260">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a2a40"/>
+      <stop offset="1" stop-color="#0f1116"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3b82f6" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0.1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="260" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1400" height="260" fill="url(#glow)"/>
+  <circle cx="120" cy="80" r="60" fill="#ffffff" fill-opacity="0.05"/>
+  <circle cx="1280" cy="200" r="90" fill="#ffffff" fill-opacity="0.04"/>
+  <g fill="#ffffff" fill-opacity="0.08">
+    <rect x="220" y="70" width="180" height="120" rx="16"/>
+    <rect x="420" y="70" width="180" height="120" rx="16"/>
+  </g>
+  <g fill="#ffffff" fill-opacity="0.2">
+    <circle cx="275" cy="130" r="10"/>
+    <circle cx="305" cy="115" r="6"/>
+    <circle cx="305" cy="145" r="6"/>
+    <rect x="245" y="120" width="22" height="8" rx="4"/>
+    <rect x="252" y="112" width="8" height="22" rx="4"/>
+  </g>
+  <g fill="#ffffff" fill-opacity="0.2">
+    <circle cx="505" cy="130" r="8"/>
+    <circle cx="535" cy="115" r="6"/>
+    <circle cx="535" cy="145" r="6"/>
+    <rect x="475" y="120" width="22" height="8" rx="4"/>
+    <rect x="482" y="112" width="8" height="22" rx="4"/>
+  </g>
+  <text x="70" y="170" font-family="Arial, sans-serif" font-size="42" fill="#e8edf2" fill-opacity="0.9">
+    Game Tracker
+  </text>
+  <text x="72" y="205" font-family="Arial, sans-serif" font-size="16" fill="#cbd5e1" fill-opacity="0.8">
+    Sync Steam and organize your library
+  </text>
+</svg>
